@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TRMS Requests</title>
+<!-- bootstrap stylesheet -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="trmsstyle.css">
+</head>
+<body>
+<nav class="nav navbar-dark bg-dark">
+ <span class="navbar-brand">TRMS</span>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/Project1/manager.html">Manage Requests</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/Project1/requests.html">Request Reimbursement</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/Project1/trms/logout">Logout</a>
+  </li>
+  </ul>
+  </nav>
+  <form action="trms/request" method="post" id="myForm">
+  	<label for="fname" id="labels">First Name</label>
+  	<input type="text" name="fname" required placeholder="First Name" class="pad">
+  	<br/>
+  	<label for="lname" id="labels">Last Name</label>
+  	<input type="text" name="lname" required placeholder="Last Name" class="pad"> 
+  	<br/>
+  	<label for="date" id="labels">Start Date</label>
+  	<input type="date" name="date" required placeholder="Start Date: MM-DD-YYYY" class="pad">
+  	<br/>
+  	<label for="time" id="labels">Start Time (HH:MM:SS format)</label>
+  	<input type="text" name="time" required placeholder="Start Time: HH:MM:SS" class="pad2">
+  	<br/>
+  	<label for="loc" id="labels">Event Location</label>
+  	<input type="text" name="loc" required placeholder="Location" class="pad">
+  	<br/>
+  	<label for="desc" id="labels">Event Description</label>
+  	<input type="text" name="desc" required placeholder="Description" class="pad">
+  	<br/>
+  	<label for="cost" id="labels">Event Cost</label>
+  	<input type="number" name="cost" required placeholder="Cost" class="pad">
+  	<br/>
+  	<label for="grad" id="labels">Grading Format</label>
+  	<br/>
+  	<input type="radio" name="grad" required value="1">Presentation
+  	<br/>
+  	<input type="radio" name="grad" required value="0">No Presentation
+  	<br/>
+  	<label for="grade" id="labels">Passing Grade</label>
+  	<input type="text" name = "grade" required placeholder="Passing Grade" class="pad" value="C">
+  	<br/>
+  	<label for="event" id="labels">Event Type</label>
+  	<br/>
+  	<input type="radio" name="event" required value="1">University Course
+  	<br/>
+  	<input type="radio" name="event" required value="2">Seminar
+  	<br/>
+  	<input type="radio" name="event" required value="3">Certification Preparation Class
+  	<br/>
+  	<input type="radio" name="event" required value="4">Certification
+  	<br/>
+  	<input type="radio" name="event" required value="5">Technical Training
+  	<br/>
+  	<input type="radio" name="event" required value="6">Other
+  	<br/>
+  	<label for="just" id="labels">Justification</label>
+  	<input type="text" name="just" required placeholder="Justification" class="pad">
+  	<br/>
+  	<label for="tmiss" id="labels">Time Missed</label>
+  	<input type="text" name="tmiss" placeholder="Time Missed" class="pad" value=0>
+  	<br/>
+  	<label for="files" id="labels">Additional Resources</label>
+  	<input type = "file" accept=".pdf,.jpeg,.png,.txt,.doc,.msg" multiple class="pad" name="files" id="filess"/>
+  	<br/>
+  	<input type="submit" name="submit" class="btn btn-primary" class="pad" value="Submit Request" id="submit"/>
+
+  </form>
+
+<script src="/Project1/files.js"></script>
+<!--bootstrap required js-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+
+.nav{
+	margin-right: 0px;
+}
+
+.nav-link {
+	color:rgb(128, 193, 255);
+}
+
+#Tim {
+	white-space:pre;
+}
+
+.navbar-brand {
+	margin-left:10px;
+	margin-right:10px;
+}
+#login {
+	margin-top:140px;
+	margin-bottom: 170px;
+}
+#myForm {
+	margin-left:10px;
+	margin-top:30px;
+	margin-bottom:auto;
+}
+.pad {
+	margin:10px;
+}
+.pad2{
+	margin:10px;
+	margin-left:18px;
+}
+#space {
+	margin-top: 15px;
+}
+.form-group {
+	text-align:left;
+	width:400px;
+	margin:auto;
+	color:black;
+	padding: 5px;
+}
+
+#submit{
+	margin-bottom:20px;
+}
+
