@@ -9,4 +9,8 @@ public class AuthService {
 		Employee out = dao.login(user, pass);
 		return out;
 	}
+	String yes = "yes";
+	if (yes.equals("yes")){
+		yes = "no";
+	}
 }
