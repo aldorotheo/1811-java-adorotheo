@@ -23,6 +23,7 @@ public class Request {
 	private String t_missed; //time missed (string so they can enter in values like "1 week"
 	private int status; //status for determining what stage the application/request is at
 	private int urgency;
+	private int changedcost;
 	private String finalg = "";
 	public int getUrgency() {
 		return urgency;
@@ -35,6 +36,12 @@ public class Request {
 	}
 	public int getEmp_id() {
 		return emp_id;
+	}
+	public int getChangedcost() {
+		return changedcost;
+	}
+	public void setChangedcost(int changedcost) {
+		this.changedcost = changedcost;
 	}
 	public Date getS_date() {
 		return s_date;
@@ -145,6 +152,7 @@ public class Request {
 		this.just = just;
 		this.t_missed = t_missed;
 		this.status = status;
+		this.finalg="";
 	}
 	public Request(int emp_id, Date s_date, Time s_time, String s_location,
 			String description, double s_cost, int g_format, int ev_type, String just, String t_missed, int status, String finalg) {
@@ -177,6 +185,7 @@ public class Request {
 		this.just = just;
 		this.t_missed = t_missed;
 		this.status = status;
+		this.finalg="";
 	}
 	public Request() {
 	}
@@ -199,7 +208,7 @@ public class Request {
 	}
 	@Override
 	public String toString() {
-		return "Request ID: " + req_id + " Date: " + s_date + " Time: " + s_time
+		return "Request ID: " + req_id + " Employee: " + emp_id + " Date: " + s_date + " Time: " + s_time
 				+ " Location: " + s_location + " Description: '" + description + "' Amount: "
 				+ s_cost + " Grading Format:" + g_format + " Event Type: " + ev_type + " Justification: '" + just + "' Time Missed: "
 				+ t_missed + " Final: " + finalg + "\n";

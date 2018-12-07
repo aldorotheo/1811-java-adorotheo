@@ -14,4 +14,12 @@ public class ManagerService {
 	public List<Request> readRequests(int emp_id) {
 		return rdao.readRequests(emp_id);
 	}
+	
+	public List<Request> readEmployeeRequests(int emp_id, int emp_type) {
+		return rdao.readEmployeeRequests(emp_id, emp_type);
+	}
+
+	public List<Request> readCurrentRequests(int emp_id, int emp_type) {
+		return rdao.readEmployeeRequests(emp_id, emp_type);
+	}
 }

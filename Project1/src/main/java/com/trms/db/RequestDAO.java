@@ -16,7 +16,7 @@ import com.trms.trms.Request;
 
 public class RequestDAO {
 	private static Connection conn = ConnectionFactory.getConnectionFactory().createConnection();
-
+	private static EmployeeDAO dao = new EmployeeDAO();
 	public List<Request> readRequests(int emp_id) {
 		String sql = "select * from TRMSReqs where emp_id = ?;";
 		ArrayList<Request> output = new ArrayList<Request>();
@@ -25,10 +25,11 @@ public class RequestDAO {
 			stmt.setInt(1, emp_id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+				
 				LocalDateTime ldt = rs.getTimestamp(5).toLocalDateTime();
 				Request out = new Request(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getTime(4), ldt,
 						rs.getString(6), rs.getString(7), rs.getDouble(8), rs.getInt(9), rs.getInt(10),
-						rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(14));
+						rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(15));
 				
 				output.add(out);
 			}
@@ -38,6 +39,101 @@ public class RequestDAO {
 		}
 		return output;
 	}
+	
+	public List<Request> bencoRequests() {
+		String sql = "select * from trmsreqs where status between 0 and 3;";
+		ArrayList<Request> output = new ArrayList<Request>();
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				LocalDateTime ldt = rs.getTimestamp(5).toLocalDateTime();
+				Request out = new Request(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getTime(4), ldt,
+						rs.getString(6), rs.getString(7), rs.getDouble(8), rs.getInt(9), rs.getInt(10),
+						rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(15));
+				
+				output.add(out);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+	
+	public List<Request> readEmployeeRequests(int emp_id, int emp_type) {
+		ArrayList<Request> output = new ArrayList<Request>();
+		try {
+			String sql = "select * from trmsreqs where emp_id in (select emp_id from trmsemp where (super=? or depthead=?) and emp_id!=?);";
+			PreparedStatement stmt;
+			if (emp_type==0) {
+				sql = "select * from trmsreqs;";
+				stmt = conn.prepareStatement(sql);
+			}
+			else {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, emp_id);
+			stmt.setInt(2, emp_id);
+			stmt.setInt(3, emp_id);
+			}
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				LocalDateTime ldt = rs.getTimestamp(5).toLocalDateTime();
+				Request out = new Request(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getTime(4), ldt,
+						rs.getString(6), rs.getString(7), rs.getDouble(8), rs.getInt(9), rs.getInt(10),
+						rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(15));
+				
+				output.add(out);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+	public List<Request> readCurrentRequests(int emp_id, int emp_type) {
+		String sql = "select * from trmsreqs where emp_id in (select emp_id from trmsemp where (super=? or depthead=?) and emp_id!=? and (status between 0 and 3));";
+		ArrayList<Request> output = new ArrayList<Request>();
+		try {
+			sql = "select * from trmsreqs where status between 0 and 3;";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			if (emp_type==0) {
+				sql = "select * from trmsreqs where status between 0 and 3;";
+				stmt = conn.prepareStatement(sql);
+			}
+			else if (emp_type==1) {
+				sql = "select * from trmsreqs where emp_id in (select emp_id from trmsemp where (depthead=?) and emp_id!=? and (status between 0 and 2));";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, emp_id);
+				stmt.setInt(2, emp_id);
+			}
+			else if (emp_type==2) {
+				sql = "select * from trmsreqs where emp_id in (select emp_id from trmsemp where (super=?) and emp_id!=? and (status between 0 and 4));";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, emp_id);
+				stmt.setInt(2, emp_id);
+				stmt.setInt(3, emp_id);
+			}
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				LocalDateTime ldt = rs.getTimestamp(5).toLocalDateTime();
+				Request out = new Request(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getTime(4), ldt,
+						rs.getString(6), rs.getString(7), rs.getDouble(8), rs.getInt(9), rs.getInt(10),
+						rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(15));
+				
+				output.add(out);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+	
+
 
 	public Request readRequestById(int req_id) {
 		String sql = "select * from TRMSReqs where req_id=?;";
@@ -49,7 +145,7 @@ public class RequestDAO {
 			while (rs.next()) {
 				output = new Request(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getTime(4),
 						rs.getTimestamp(5).toLocalDateTime(), rs.getString(6), rs.getString(7), rs.getDouble(8),
-						rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(14));
+						rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12), rs.getInt(13), rs.getString(15));
 			}
 
 		} catch (SQLException e) {
@@ -144,5 +240,79 @@ public class RequestDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void acceptRequest(int req_id, int emp_id, int emp_type, boolean accept) {
+		Request check = readRequestById(req_id);
+		int status = check.getStatus();
+		if (status < 3) {
+			try {
+				PreparedStatement stmt;
+				if (emp_type==0 & accept) {
+					String sql = "update TRMSReqs set status = ? where req_id=? and emp_id!=?);";
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, 3);
+					stmt.setInt(2, req_id);
+					stmt.setInt(3, emp_id);
+				}
+				else if (emp_type==1 & status < 3 & accept) {
+					String sql = "update TRMSReqs set status = ? where req_id=? and emp_id in (select emp_id from trmsemp where (depthead=?) and emp_id!=?);";
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, 2);
+					stmt.setInt(2, req_id);
+					stmt.setInt(3, emp_id);
+					stmt.setInt(4, emp_id);
+					stmt.setInt(5, emp_id);
+				}
+				else if (emp_type==2 & status < 2 & accept) {
+					String sql = "update TRMSReqs set status = ? where req_id=? and emp_id in (select emp_id from trmsemp where (depthead=?) and emp_id!=?);";
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, 1);
+					stmt.setInt(2, req_id);
+					stmt.setInt(3, emp_id);
+					stmt.setInt(4, emp_id);
+					stmt.setInt(5, emp_id);
+				}
+				else {
+					if (emp_type==0) {
+						String sql = "update TRMSReqs set status = ? where req_id=?;";
+						stmt = conn.prepareStatement(sql);
+						stmt.setInt(1,418);
+						stmt.setInt(2,req_id);
+					}
+					else {
+						String sql = "update TRMSReqs set status = ? where req_id=? and emp_id in (select emp_id from trmsemp where (depthead=?) and emp_id!=?);";
+						stmt = conn.prepareStatement(sql);
+						stmt.setInt(1, 418);
+						stmt.setInt(2, req_id);
+						stmt.setInt(3, emp_id);
+						stmt.setInt(4, emp_id);
+						stmt.setInt(5, emp_id);
+					}
+				}
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (status == 3 & accept) {
+				String sql = "update TRMSReqs set status = ? where req_id=? and emp_id in (select emp_id from trmsemp where super=? and emp_id!=?);";
+			try {
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				if (accept)
+					stmt.setInt(1, 4);
+				if(!accept)
+					stmt.setInt(1, 418);
+				stmt.setInt(2, req_id);
+				stmt.setInt(3, emp_id);
+				stmt.setInt(4, emp_id);
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+	}
 
-}
+

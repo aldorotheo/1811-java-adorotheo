@@ -28,16 +28,31 @@ public class RequestServlet extends HttpServlet {
 		HttpSession s = req.getSession();
 		Employee emp = (Employee) s.getAttribute("user");
 		System.out.println(req.getParameter("date"));
-		Date date = Date.valueOf(req.getParameter("date"));
-		Time time = Time.valueOf(req.getParameter("time"));
+		String dater = (req.getParameter("date"));
+		Date date = null;
+		if (dater!=null)
+			date = Date.valueOf(dater);
+		Time time = null;
+		String timer = (req.getParameter("time"));
+		if (timer!=null)
+			time = Time.valueOf(timer);
 		String loc = req.getParameter("loc");
 		String desc = req.getParameter("desc");
-		double cost = Double.parseDouble(req.getParameter("cost"));
-		int pres = Integer.parseInt(req.getParameter("grad"));
+		String coster = req.getParameter("cost");
+		double cost=0.0;
+		if (coster!=null)
+			cost = Double.parseDouble(coster);
+		String preser = req.getParameter("grad");
+		int pres=0;
+		if (preser!=null)
+			pres = Integer.parseInt(preser);
 		String grade = req.getParameter("grade");
 		GradeService gs = new GradeService();
 		int g_format = gs.getGradeId(pres, grade);
-		int event = Integer.parseInt(req.getParameter("event"));
+		String eventer = (req.getParameter("event"));
+		int event=0;
+		if (eventer!=null)
+			event = Integer.parseInt(eventer);
 		String just = req.getParameter("just");
 		String tmiss = req.getParameter("tmiss");
 		String[] files = req.getParameterValues("files");
@@ -53,7 +68,8 @@ public class RequestServlet extends HttpServlet {
 		for (int i = 0; i < files.length; i++) {
 			fs.insertFile(req_id, files[i]);
 		}
-		resp.sendRedirect("/manager.html");
+		resp.sendRedirect("/Project1/manager.html");
+		return;
 //		RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
 //		rd.forward(req, resp);
 	}

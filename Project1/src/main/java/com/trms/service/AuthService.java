@@ -4,7 +4,6 @@ import com.trms.db.EmployeeDAO;
 import com.trms.trms.Employee;
 
 public class AuthService {
-	
 	private EmployeeDAO dao = new EmployeeDAO();
 	public Employee login(String user, String pass) {
 		Employee out = dao.login(user, pass);

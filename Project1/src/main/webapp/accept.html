@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TRMS Management</title>
+<!-- bootstrap stylesheet -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/Project1/trmsstyle.css">
+<script src="/Project1/jquery-3.3.1.js"></script>
+<script src="/Project1/accept.js"></script>
+</head>
+<body>
+<nav class="nav navbar-dark bg-dark">
+ <span class="navbar-brand">TRMS</span>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/Project1/manager.html">View Requests</a>
+  </li>
+   <li class="nav-item">
+    <a class="nav-link" href="/Project1/editmanager.html">Edit Request</a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link active" href="/Project1/accept.html">Manage Requests</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/Project1/requestmanager.html">Request Reimbursement</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/Project1/trms/logout">Logout</a>
+  </li>
+  </ul>
+  </nav>
+  <form class="managecenter" action="/Project1/trms/accept" method="POST">
+   <input type="text" placeholder="Enter Request ID" id="id" name="getID">   
+  <button type="button" class="btn btn-primary" id="getRequest">Get Request</button>
+  <table class="table" id="Tim">
+  </table>
+  <button type="submit" class="btn btn-primary" name="accept" value="Accept Request" id="green">Accept Request</button>
+  <button type="submit" class="btn btn-primary" name="deny" value="Deny Request" id="red" formaction="/Project1/trms/deny">Deny Request</button>
+  </form>
+  </body>
+  </html>

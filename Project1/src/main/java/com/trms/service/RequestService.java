@@ -32,7 +32,21 @@ public class RequestService {
 		return dao.getRequestId();
 	}
 	
-	public void updateRequest(Request req) {
+	public void updateRequest(Request req, Request original) {
+		if (req.getS_cost()!=0.0) {
+			double s_cost = req.getS_cost();
+			int ev_type = req.getEv_type();
+			int emp_id = req.getEmp_id();
+			int coverage = edao.getEventCoverage(ev_type);
+			double balance = emdao.getBalance(emp_id);
+			double reimbursementAmount = s_cost * (coverage/100.0);
+			balance = balance + original.getS_cost();
+			emdao.updateBalance(req.getEmp_id(), balance);
+			if (reimbursementAmount > balance)
+				reimbursementAmount = balance;
+			balance = balance - reimbursementAmount;
+			emdao.updateBalance(emp_id, balance);
+		}
 		dao.updateRequest(req);
 	}
 	
@@ -40,4 +54,9 @@ public class RequestService {
 		Request r = dao.readRequestById(id);
 		return r;
 	}
+	
+	public void acceptRequest(int req_id, int emp_id, int emp_type, boolean accept) {
+		dao.acceptRequest(req_id, emp_id, emp_type, accept);
+	}
+	
 }

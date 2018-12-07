@@ -14,6 +14,7 @@ import com.trms.trms.Employee;
 
 public class LoginServlet extends HttpServlet {
 	private AuthService auth = new AuthService();
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String user = req.getParameter("user");
 		String pass = req.getParameter("pass");
@@ -21,11 +22,16 @@ public class LoginServlet extends HttpServlet {
 		if (!emp.getUsername().isEmpty()) {
 			HttpSession sess = req.getSession();
 			sess.setAttribute("user", emp);
-			resp.sendRedirect("/Project1/manager.html");
-//			RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
-//			rd.forward(req, resp);
-		}
-		else {
+			if (emp.getEmp_type() != 3) {
+				resp.sendRedirect("/Project1/manager.html");
+				return;
+			} else {
+				resp.sendRedirect("/Project1/manage.html");
+				return;
+			}
+			// RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
+			// rd.forward(req, resp);
+		} else {
 			resp.getWriter().write("<h1>Sorry, we didn't recognize your username or password.</h1>");
 		}
 	}

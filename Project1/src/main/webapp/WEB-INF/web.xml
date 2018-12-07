@@ -39,4 +39,14 @@
     <servlet-name>EditServlet</servlet-name>
     <url-pattern>/EditServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AcceptServlet</display-name>
+    <servlet-name>AcceptServlet</servlet-name>
+    <servlet-class>com.trms.servlet.AcceptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AcceptServlet</servlet-name>
+    <url-pattern>/AcceptServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

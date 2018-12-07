@@ -12,6 +12,31 @@
 	white-space:pre;
 }
 
+#NotTim {
+	white-space:pre;
+	margin-left:0px;
+	float:left;
+}
+.requl {
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.reqli2{
+	display:inline;
+	padding: 10px;	
+}
+.reqli{
+	display:inline;
+	padding: 20px;	
+}
+
+.managecenter {
+	margin:auto;
+	margin-left:20px;
+	margin-top:20px;
+}
+
 .navbar-brand {
 	margin-left:10px;
 	margin-right:10px;
@@ -45,5 +70,12 @@
 
 #submit{
 	margin-bottom:20px;
+}
+
+#red {
+	background-color:red;
+}
+#green {
+	background-color:green;
 }
 

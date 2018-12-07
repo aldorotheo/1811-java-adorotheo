@@ -54,54 +54,63 @@ public class EditServlet extends HttpServlet {
 		RequestService rs = new RequestService();
 		Request r = rs.readRequestById(req_id);
 		Employee emp = (Employee) s.getAttribute("user");
-		Date date = Date.valueOf(req.getParameter("date"));
-		if(date==null)
+		Date date;
+		if (req.getParameter("date")!="")
+			date = Date.valueOf(req.getParameter("date"));
+		else
 			date = r.getS_date();
 		String timer = (req.getParameter("time"));
 		Time time;
-		if(timer==null)
+		if(timer=="")
 			time = r.getS_time();
 		else
 			time = Time.valueOf(timer);
 		String loc = req.getParameter("loc");
-		if(loc==null)
+		if(loc=="")
 			loc = r.getS_location();
 		String desc = req.getParameter("desc");
-		if(desc==null)
+		if(desc=="")
 			desc = r.getDescription();
 		String coster = (req.getParameter("cost"));
 		double cost;
-		if (coster==null) {
+		if (coster=="") {
 			cost = r.getS_cost();
 		}
 		else
 			cost = Double.parseDouble(coster);
-		int pres = Integer.parseInt(req.getParameter("grad"));
+		int pres=0;
+		if(req.getParameter("grad")!=null)
+			pres = Integer.parseInt(req.getParameter("grad"));
 		String grade = req.getParameter("grade");
 		GradeService gs = new GradeService();
-		int g_format = gs.getGradeId(pres, grade);
+		int g_format=0;
+		if(pres!=0)
+			g_format = gs.getGradeId(pres, grade);
 		if(g_format==0)
 			g_format=r.getG_format();
-		int event = Integer.parseInt(req.getParameter("event"));
+		int event = 0;
+		if (req.getParameter("event")!=null)
+			event = Integer.parseInt(req.getParameter("event"));
 		if(event==0)
 			event=r.getEv_type();
 		String just = req.getParameter("just");
-		if(just==null)
+		if(just=="")
 			just=r.getJust();
 		String tmiss = req.getParameter("tmiss");
 		if(tmiss=="0")
 			tmiss=r.getT_missed();
 		String finalg = req.getParameter("finalg");
-		if (finalg==null)
+		if (finalg=="")
 			finalg = r.getFinalg();
 		String[] files = req.getParameterValues("files");
 		FileService fs = new FileService();
 		Request request = new Request(req_id, emp.getEmp_id(), date, time, LocalDateTime.now(), loc, desc, cost, g_format, event, just, tmiss, 0, finalg);
-		rs.updateRequest(request);
+		rs.updateRequest(request, r);
 		for (int i = 0; i < files.length; i++) {
 			fs.insertFile(req_id, files[i]);
 		}
-		resp.sendRedirect("/manager.html");
+		resp.sendRedirect("/Project1/manager.html");
+		return;
 //		RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
 //		rd.forward(req, resp);
 	}

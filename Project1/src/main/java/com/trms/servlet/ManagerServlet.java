@@ -1,6 +1,7 @@
 package com.trms.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,27 +35,40 @@ public class ManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String path = request.getRequestURI();
-		System.out.println(path);
 		if("/Project1/trms/manage".equals(path)) {
 			//return entire user list
 			HttpSession s = request.getSession();
 			Employee emp = (Employee) s.getAttribute("user");
+			ObjectMapper om = new ObjectMapper();
 			List<Request> reqList = mServ.readRequests(emp.getEmp_id());
-//			System.out.println(emp.getEmp_id());
-//			System.out.println(reqList);
-//			ObjectMapper om = new ObjectMapper();
-//			String reqListJson = om.writeValueAsString(reqList);
-			for (Request r : reqList) {
-				response.getWriter().write(r.toString());		
-			}
+			String reqListjson = om.writeValueAsString(reqList);
+			response.getWriter().write(reqListjson);		
+		}
+		else if("/Project1/trms/manage/emp".equals(path)) {
+			//return entire user list
+			HttpSession s = request.getSession();
+			Employee emp = (Employee) s.getAttribute("user");
+			ObjectMapper om = new ObjectMapper();
+			List<Request> reqList = mServ.readEmployeeRequests(emp.getEmp_id(), emp.getEmp_type());
+			String reqListjson = om.writeValueAsString(reqList);
+			response.getWriter().write(reqListjson);	
+		}
+		else if ("/Project1/trms/manage/current".equals(path)) {
+			HttpSession s = request.getSession();
+			Employee emp = (Employee) s.getAttribute("user");
+			ObjectMapper om = new ObjectMapper();
+			List<Request> reqList = mServ.readCurrentRequests(emp.getEmp_id(), emp.getEmp_type());
+			String reqListjson = om.writeValueAsString(reqList);
+			response.getWriter().write(reqListjson);
 		}
 		else {
 			String req_id = path.substring(path.lastIndexOf("/")+1);
-			
+			ArrayList<Request> al= new ArrayList<Request>();
 			Request req = mServ.readRequest(Integer.parseInt(req_id));
-//			ObjectMapper om = new ObjectMapper();
-//			String reqJson = om.writeValueAsString(req);
-			response.getWriter().write(req.toString());
+			al.add(req);
+			ObjectMapper om = new ObjectMapper();
+			String reqJson = om.writeValueAsString(al);
+			response.getWriter().write(reqJson);
 			
 		}
 	}
