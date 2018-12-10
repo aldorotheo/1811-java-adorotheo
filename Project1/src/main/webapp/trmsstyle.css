@@ -79,3 +79,13 @@
 	background-color:green;
 }
 
+#mid {
+	width:10px;
+}
+#sid {
+	width:10px;
+}
+
+.reason {
+	padding: 5px;
+}

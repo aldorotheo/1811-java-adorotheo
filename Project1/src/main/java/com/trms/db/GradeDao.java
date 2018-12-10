@@ -35,10 +35,11 @@ public class GradeDao {
 			if(rs.next()) {
 				out = rs.getInt(1);
 			}
-			else {
-				createGrade(grade);
-				out = findGradeID(grade);
-			}
+//			else {
+//				createGrade(grade);
+//				out = findGradeID(grade);
+//				return out;
+//			}
 			
 			
 		} catch (SQLException e) {

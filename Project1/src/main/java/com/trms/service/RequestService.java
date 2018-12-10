@@ -11,6 +11,8 @@ import com.trms.db.RequestDAO;
 import com.trms.trms.Request;
 
 public class RequestService {
+	private static LogService lServ = new LogService();
+	private static AlertService aServ = new AlertService();
 	private RequestDAO dao = new RequestDAO();
 	private EventDao edao = new EventDao();
 	private EmployeeDAO emdao = new EmployeeDAO();
@@ -26,6 +28,7 @@ public class RequestService {
 		Request req = new Request(emp_id, s_date, s_time, s_location,
 				description, reimbursementAmount,g_format, ev_type,just,t_missed,status); 
 		dao.createRequest(req);
+		lServ.log(emp_id + " created a new reimbursement request");
 	}
 	
 	public int getRequestId() {
@@ -47,6 +50,7 @@ public class RequestService {
 			balance = balance - reimbursementAmount;
 			emdao.updateBalance(emp_id, balance);
 		}
+		lServ.log(req.getEmp_id() + " edited request " + req.getReq_id());
 		dao.updateRequest(req);
 	}
 	
@@ -57,6 +61,13 @@ public class RequestService {
 	
 	public void acceptRequest(int req_id, int emp_id, int emp_type, boolean accept) {
 		dao.acceptRequest(req_id, emp_id, emp_type, accept);
+		Request r = readRequestById(req_id);
+		if (accept) {
+			lServ.log(emp_id + " accepted request " + req_id);
+		}
+		else {
+			lServ.log(emp_id + " denied request " + req_id);
+		}
 	}
 	
 }

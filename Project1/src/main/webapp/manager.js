@@ -4,7 +4,7 @@
 
 window.onload = function(){
 
-	jQuery.get("/Project1/trms/manage/emp", function(responseText) { 
+	jQuery.get("/Project1/trms/manage/current", function(responseText) { 
     	$("#Tim").empty();
 		var parser = JSON.parse(responseText);
 		for(var i = 0; i < parser.length; i++) {
@@ -27,7 +27,7 @@ window.onload = function(){
     	}
     });
 	jQuery(window).on("load", function() {
-		jQuery.get("/Project1/trms/manage/emp", function(responseText) { 
+		jQuery.get("/Project1/trms/manage/current", function(responseText) { 
         	$("#Tim").empty();
     		var parser = JSON.parse(responseText);
     		for(var i = 0; i < parser.length; i++) {

@@ -23,6 +23,11 @@ import com.trms.trms.Employee;
 import com.trms.trms.Request;
 
 public class RequestServlet extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req,resp);
+	}
+	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String fileJson;
 		HttpSession s = req.getSession();
@@ -68,9 +73,10 @@ public class RequestServlet extends HttpServlet {
 		for (int i = 0; i < files.length; i++) {
 			fs.insertFile(req_id, files[i]);
 		}
-		resp.sendRedirect("/Project1/manager.html");
+		resp.sendRedirect("/Project1/manage.html");
 		return;
-//		RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
+//		RequestDispatcher rd = req.getRequestDispatcher("/manage.html");
 //		rd.forward(req, resp);
+//		return;
 	}
 }

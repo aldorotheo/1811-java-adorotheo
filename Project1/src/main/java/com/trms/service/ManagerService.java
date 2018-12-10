@@ -20,6 +20,6 @@ public class ManagerService {
 	}
 
 	public List<Request> readCurrentRequests(int emp_id, int emp_type) {
-		return rdao.readEmployeeRequests(emp_id, emp_type);
+		return rdao.readCurrentRequests(emp_id, emp_type);
 	}
 }

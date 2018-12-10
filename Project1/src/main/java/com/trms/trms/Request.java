@@ -206,6 +206,24 @@ public class Request {
 		this.status = status;
 		this.finalg = finalg;
 	}
+	public Request(int req_id, int emp_id, Date s_date, Time s_time, LocalDateTime a_date, String s_location, String description,
+			double s_cost, int g_format, int ev_type, String just, String t_missed, int status, int urgency, String finalg) {
+		this.req_id = req_id;
+		this.emp_id = emp_id;
+		this.s_date = s_date;
+		this.s_time = s_time;
+		this.a_date = a_date;
+		this.s_location = s_location;
+		this.description = description;
+		this.s_cost = s_cost;
+		this.g_format = g_format;
+		this.ev_type = ev_type;
+		this.just = just;
+		this.t_missed = t_missed;
+		this.status = status;
+		this.urgency = urgency;
+		this.finalg = finalg;
+	}
 	@Override
 	public String toString() {
 		return "Request ID: " + req_id + " Employee: " + emp_id + " Date: " + s_date + " Time: " + s_time

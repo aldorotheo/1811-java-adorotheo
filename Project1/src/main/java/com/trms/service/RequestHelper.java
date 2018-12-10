@@ -7,6 +7,7 @@ import com.trms.servlet.EditServlet;
 import com.trms.servlet.LoginServlet;
 import com.trms.servlet.LogoutServlet;
 import com.trms.servlet.ManagerServlet;
+import com.trms.servlet.MessageServlet;
 import com.trms.servlet.PageNotFoundServlet;
 import com.trms.servlet.RedirectServlet;
 import com.trms.servlet.RequestServlet;
@@ -20,6 +21,7 @@ public class RequestHelper {
 	private static HttpServlet editServlet = new EditServlet();
 	private static HttpServlet redirectServlet = new RedirectServlet();
 	private static HttpServlet acceptServlet = new AcceptServlet();
+	private static HttpServlet messageServlet = new MessageServlet();
 	public HttpServlet dispatchRequest(String path) {
 		HttpServlet nextServlet = null;
 		switch(path) {
@@ -46,6 +48,15 @@ public class RequestHelper {
 			break;
 		case "/Project1/trms/accept":
 			nextServlet = acceptServlet;
+			break;
+		case "/Project1/trms/message/send":
+			nextServlet = messageServlet;
+			break;
+		case "/Project1/trms/message/unread":
+			nextServlet = messageServlet;
+			break;
+		case "/Project1/trms/message":
+			nextServlet = messageServlet;
 			break;
 		default:
 			if (path.contains("/Project1/trms/manage/")) {

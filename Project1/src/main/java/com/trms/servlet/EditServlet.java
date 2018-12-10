@@ -109,7 +109,7 @@ public class EditServlet extends HttpServlet {
 		for (int i = 0; i < files.length; i++) {
 			fs.insertFile(req_id, files[i]);
 		}
-		resp.sendRedirect("/Project1/manager.html");
+		resp.sendRedirect("/Project1/manage.html");
 		return;
 //		RequestDispatcher rd = req.getRequestDispatcher("/manager.html");
 //		rd.forward(req, resp);
